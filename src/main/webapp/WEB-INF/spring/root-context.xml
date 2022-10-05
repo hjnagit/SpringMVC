@@ -21,10 +21,18 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
 		
 		<!-- setDriverClassName()라는 뜻 -->
-		<property name="driverClassName"
+		<!-- 기존 설정 값 -->
+<!-- 		<property name="driverClassName"
 				value="com.mysql.cj.jdbc.Driver" />
 		<property name="url"
-				value="jdbc:mysql://localhost:3306/springdb" />
+				value="jdbc:mysql://localhost:3306/springdb" /> -->
+		
+		<!-- log4jdbc 설정값 -->		
+		<property name="driverClassName"
+				value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
+		<property name="url"
+				value="jdbc:log4jdbc:mysql://localhost:3306/springdb" />
+				
 		<property name="username" 
 				value="root" />
 		<property name="password" 
@@ -51,7 +59,18 @@
 	</bean>
 	<!-- MyBatis연동 SqlSessionFactory -->
 	
-	<!-- 다른 페키지에 있는 객체를 찾아서 등록 -->
+	
+	<!-- 디비연동(MyBatis) + 자원해제 sqlSessionTemplate -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" 
+			destroy-method="clearCache" >
+		
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
+		
+	</bean>
+	<!-- 디비연동(MyBatis) + 자원해제 sqlSessionTemplate -->
+	
+	
+	<!-- 다른 페키지에 있는 객체를 찾아서 빈으로 등록 -->
 	<context:component-scan base-package="com.itwillbs.persistence" />
 	
 		
