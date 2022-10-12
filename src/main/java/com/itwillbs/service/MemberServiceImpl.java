@@ -31,5 +31,32 @@ public class MemberServiceImpl implements MemberService{
 		
 		log.info("DAO 동작 완료!! 서비스 -> 컨트롤러");
 	}
+
+
+	@Override
+	public MemberVO memberLogin(MemberVO vo) {
+		// 컨트롤러 -> 로그인 정보(vo[id,pw]) -> 서비스
+		log.info("MemberServiceImpl-memberLogin() 호출");
+		// 서비스 -> 로그인 정보(vo[id,pw]) -> DAO
+		log.info("DAO 로그인 메서드 호출!!");
+		
+		//DAO 객체 생성 -> 메서드 호출
+		//MemberVO resultVO = dao.loginMember(vo);
+		
+		//return resultVO;
+		return dao.loginMember(vo);
+	}
+
+
+	@Override
+	public MemberVO memberGet(String userid) {
+		log.info("memberGet(String userid) 호출 ");
+		// 주입 객체 사용
+		return dao.getMember(userid);
+	}
+	
+	
+	
+	
 	
 }
